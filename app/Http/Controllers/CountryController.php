@@ -54,18 +54,11 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function fetchCity(Request $request, Country $country)
+    public function fetchCity(Request $request, $country)
     {
-        $validate = Validator::make($request->all(), [
-            'country' => 'required|string'
-        ]);
 
-        if($validate->fails())
-        {
-            return $this->errorResponse($validate->errors());
-        }
+        $getCountry = Country::where('name', $country)->first();
 
-        $getCountry = Country::where('name', $request->input('country'))->first();
         if($getCountry){
             $getCities = $getCountry->cities()->get();
             return $this->successResponse('success', $getCities);
