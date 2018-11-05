@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\State;
 use Illuminate\Http\Request;
+use Validator;
 
 class StateController extends Controller
 {
@@ -46,8 +47,8 @@ class StateController extends Controller
 
         $saveState = State::create($stateData);
         if($saveState){
-            $this->successResponse('State  Created');
+            return $this->successResponse('State Created');
         }
-        else $this->errorResponse('failed');
+        else return $this->errorResponse('failed');
     }
 }
