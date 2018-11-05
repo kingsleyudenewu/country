@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Country;
 use App\State;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -22,13 +23,15 @@ class StateTest extends TestCase
         $this->state = factory(State::class)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function testCreateState()
     {
-        $this->assertTrue(true);
+        $response = $this->withHeaders([
+            'Content-Type' =>  $this->header['Accept']
+        ])->json('POST', 'api/v1/state', ['name' => $this->state->name, 'country_id' => $this->state->country_id]);
+
+        $response->assertStatus(200)->assertJsonFragment([
+            'status' => 'success',
+            'data' => null
+        ]);
     }
 }

@@ -31,12 +31,12 @@ class CountryTest extends TestCase
     public function testCreateCountry()
     {
         $response = $this->withHeaders([
-            'Content-Type' => $this->header['Accept']
-        ])->json('POST', '/api/v1/country', ['name'=> $this->country->name ]);
+            'Content-Type' =>  $this->header['Accept']
+        ])->json('POST', 'api/v1/country', ['name' => 'Nigeria']);
 
         $response->assertStatus(200)->assertJsonFragment([
             'status' => 'success',
-            'error' => null
+            'data' => null
         ]);
     }
 
@@ -48,7 +48,7 @@ class CountryTest extends TestCase
 
         $response->assertStatus(200)->assertJsonFragment([
             'status' => 'error',
-            'error' => 'failed'
+            'data' => null
         ]);
     }
 
@@ -59,8 +59,8 @@ class CountryTest extends TestCase
         ])->json('POST', 'api/v1/country', ['name' => 123456788]);
 
         $response->assertStatus(200)->assertJsonFragment([
-           'status' => 'error',
-            'error' => 'failed'
+            'status' => 'error',
+            'data' => null
         ]);
     }
 }
