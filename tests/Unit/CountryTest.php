@@ -39,4 +39,28 @@ class CountryTest extends TestCase
             'error' => null
         ]);
     }
+
+    public function testInvalidCountry()
+    {
+        $response = $this->withHeaders([
+           'Content-Type' =>  $this->header['Accept']
+        ])->json('POST', 'api/v1/country', ['name' => '']);
+
+        $response->assertStatus(200)->assertJsonFragment([
+            'status' => 'error',
+            'error' => 'failed'
+        ]);
+    }
+
+    public function testCountryWithInteger()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' => $this->header['Accept']
+        ])->json('POST', 'api/v1/country', ['name' => 123456788]);
+
+        $response->assertStatus(200)->assertJsonFragment([
+           'status' => 'error',
+            'error' => 'failed'
+        ]);
+    }
 }
