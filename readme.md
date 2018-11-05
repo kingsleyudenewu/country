@@ -21,8 +21,6 @@ An API that helps you to connect countries to states and cities associated withi
     - To run your <b>TEST</b> go to your console and type ./vendor/bin/phpunit
 </pre>
 </div>
-
-
 <p>
   <blockquote style="color:red">
     **To view the endpoint documentation kindly visit the url below stating the various end point created for this app on
