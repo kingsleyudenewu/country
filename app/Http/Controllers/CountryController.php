@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -37,15 +39,20 @@ class CountryController extends Controller
             return $this->errorResponse($validate->errors());
         }
 
-        $countryData = [
-            'name' => $request->input('name')
-        ];
+        try{
+            $countryData = [
+                'name' => $request->input('name')
+            ];
 
-        $saveCountry = Country::create($countryData);
-        if($saveCountry){
-            $this->successResponse('Country Created');
+            $saveCountry = Country::create($countryData);
+            if($saveCountry){
+                return $this->successResponse('Country Created');
+            }
+            else return $this->errorResponse('failed');
         }
-        else $this->errorResponse('failed');
+        catch (QueryException $queryException){
+            return $this->errorResponse('Operation failed');
+        }
     }
 
     /**
