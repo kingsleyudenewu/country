@@ -11,6 +11,8 @@ class CityTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(\App\City::class, 10)->create()->each(function ($city){
+            $city->states()>attach(\App\State::all());
+        });
     }
 }
