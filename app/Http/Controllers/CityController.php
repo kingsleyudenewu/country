@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use Illuminate\Http\Request;
 use Exception;
+use Validator;
 
 class CityController extends Controller
 {
