@@ -34,4 +34,28 @@ class StateTest extends TestCase
             'data' => null
         ]);
     }
+
+    public function testInvalidStateRequest()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' =>  $this->header['Accept']
+        ])->json('POST', 'api/v1/state', ['name' => '', 'country_id' => $this->state->country_id]);
+
+        $response->assertStatus(200)->assertJsonFragment([
+            'status' => 'error',
+            'data' => null
+        ]);
+    }
+
+    public function testInvalidStateRequestWithoutCountry()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' =>  $this->header['Accept']
+        ])->json('POST', 'api/v1/state', ['name' => 'Nigeria', 'country_id' => '']);
+
+        $response->assertStatus(200)->assertJsonFragment([
+            'status' => 'error',
+            'data' => null
+        ]);
+    }
 }
